@@ -1,0 +1,27 @@
+[
+  [
+    {
+      "label": "Name",
+      "value": "fir",
+      "minLength": 20
+    },
+    {
+      "label": "Password",
+      "type": "password",
+      "minLength": 6
+    },
+    {
+      "label": "Email",
+      "type": "email"
+    },
+    {
+      "label": "Phone Number",
+      "type": "tel",
+      "isRequired": false
+    },
+    {
+      "label": "Date Of Birth",
+      "type": "date"
+    }
+  ]
+]
