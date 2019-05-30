@@ -6,19 +6,21 @@
 #desc {
   /* width: 15em; */
   border-collapse: collapse;
+  border-radius: 50px;
 }
 #desc th {
   background-color: whitesmoke;
   padding: 1em;
   text-align: center;
   border: 1px solid black;
-  padding: 1em;
+  padding: 5px;
   width: 100%;
 }
 
 #desc td {
   border: 1px solid black;
-  padding: 1em;
+  padding: 5px;
+  text-align: center;
 }
 </style>
 
@@ -29,9 +31,9 @@
               :formName="'userProfile'")
 
     #table-wrapper
-      table#desc
+      table#desc(v-if="resultantObj.length!==0")
         tr
-          th User Information
+          th(colspan=7) User Information
         tr
           td UID
           td Source
@@ -40,8 +42,14 @@
           td Sent Time
           td Total Cost
           td Status
-        tr
-          td(v-for="item in tempArr") {{item.src}}
+        tr(v-for="item in resultantObj" v-model="resultantObj")
+          td {{item.uid}}
+          td {{item.source}}
+          td {{item.destination}}
+          td {{item.direction}}
+          td {{item.sentTime}}
+          td {{item.totalCost}}
+          td {{item.status}}
        
 </template>
 
@@ -58,14 +66,14 @@ export default {
     formJson
   },
   data: () => ({
-    jsonFields
+    jsonFields,
+    resultantObj: [{}]
   }),
 
   mounted() {
     this.$root.$on("formSubmitted", values =>
       // console.log(JSON.stringify(values)
       {
-        var tempArr = [];
         // axios
         //   .get("https://api.karix.co/message/")
         //   .then(response => console.log(response));
@@ -79,28 +87,21 @@ export default {
         }).then(function(response) {
           // console.log(response.data.objects);
           var responseObj = response.data.objects;
-
-          // alert(JSON.stringify(responseObj));
           var res = JSON.stringify(responseObj);
-          // console.log(res);
-          res = JSON.parse(res);
-          for (let i in res) {
-            console.log(res[i]);
-            tempArr.push(res[i]);
-          }
-          console.log(tempArr);
-          // const result = JSON.parse(res).map(item => {
-          //   return {
-          //     uid: item.uid,
-          //     source: item.source,
-          //     destination: item.destination,
-          //     direction: item.direction,
-          //     sentTime: item.sent_time,
-          //     totalCost: item.total_cost,
-          //     status: item.status
-          //   };
-          // });
-          // console.log(result);
+          const result = JSON.parse(res).map(item => {
+            return {
+              uid: item.account_uid,
+              source: item.source,
+              destination: item.destination,
+              direction: item.direction,
+              sentTime: item.sent_time,
+              totalCost: item.total_cost,
+              status: item.status
+            };
+          });
+          var temp = JSON.stringify(result);
+          console.log(temp);
+          this.resultantObj = temp;
         });
       }
     );
