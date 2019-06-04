@@ -50,17 +50,19 @@
           td {{item.sentTime}}
           td {{item.totalCost}}
           td {{item.status}}
-       
+    canvas(id="planet-chart")
 </template>
 
 <script>
 import "bulma/css/bulma.min.css";
 import "vue-form-json/dist/vue-form-json.css";
+import Bar from "vue-chartjs";
 import formJson from "vue-form-json";
 import jsonFields from "@/assets/fields";
 import axios from "axios";
 
 export default {
+  extends: Bar,
   name: "app",
   components: {
     formJson
