@@ -31,7 +31,7 @@
               :formName="'userProfile'")
 
     #table-wrapper
-      table#desc(v-if="resultantObj.length!==0")
+      table(class="table is-responsive" v-if="resultantObj.length !== 0")
         tr
           th(colspan=7) User Information
         tr
@@ -42,7 +42,7 @@
           td Sent Time
           td Total Cost
           td Status
-        tr(v-for="item in resultantObj" v-model="resultantObj")
+        tr(v-for="item in resultantObj")
           td {{item.uid}}
           td {{item.source}}
           td {{item.destination}}
@@ -74,9 +74,6 @@ export default {
     this.$root.$on("formSubmitted", values =>
       // console.log(JSON.stringify(values)
       {
-        // axios
-        //   .get("https://api.karix.co/message/")
-        //   .then(response => console.log(response));
         axios({
           method: "get",
           url: "https://api.karix.co/message/",
@@ -84,7 +81,7 @@ export default {
             username: "6e9d22a6-2e74-439e-888b-721fa1312251",
             password: "e8e7f546-b60d-4efd-9717-9766f4f087b9"
           }
-        }).then(function(response) {
+        }).then(response => {
           // console.log(response.data.objects);
           var responseObj = response.data.objects;
           var res = JSON.stringify(responseObj);
@@ -99,9 +96,9 @@ export default {
               status: item.status
             };
           });
-          var temp = JSON.stringify(result);
-          console.log(temp);
-          this.resultantObj = temp;
+          // var temp = JSON.stringify(result);
+          // console.log(temp);
+          this.resultantObj = result;
         });
       }
     );
