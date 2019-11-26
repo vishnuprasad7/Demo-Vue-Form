@@ -102,7 +102,6 @@
           td {{item.sentTime}}
           td {{item.totalCost}}
           td {{item.status}}
-    canvas(id="planet-chart")
 </template>
 
 <script>
